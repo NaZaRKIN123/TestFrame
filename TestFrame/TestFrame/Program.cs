@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TestFrame.RequestFactory;
+using TestFrame.Endpoints;
+using static TestFrame.Request;
 
 namespace TestFrame
 {
@@ -13,7 +14,15 @@ namespace TestFrame
 		{
 			var session = SessionManager.New;
 
-			HttpWorkflow.Get<EmployeeDTO>.From<EmployeesEndpoint>.ById("");
+			var proj2emp1 = Using(session)
+				.From<ProjEndpoint>().ById("2")
+				.From<EmpEndpoint>().ById("1")
+				.Get<EmpDTO>();
+
+			var emps = Using(session)
+				.From<EmpEndpoint>()
+				.Get<List<EmpDTO>>();
+
 		}
 	}
 }
