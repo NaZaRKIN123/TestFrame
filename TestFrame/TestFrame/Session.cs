@@ -10,8 +10,9 @@ using TestFrame.Endpoints;
 
 namespace TestFrame
 {
-	public static class RequestFactory
+	public static class Session
 	{
+
 
 	}
 }

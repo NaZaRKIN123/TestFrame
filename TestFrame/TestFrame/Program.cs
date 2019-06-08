@@ -11,7 +11,9 @@ namespace TestFrame
 	{
 		static void Main(string[] args)
 		{
-			var a = Get<Post>(new Dictionary<string, string>() { { "id", "2" }, { "userId", "1"} });
+			var session = SessionManager.New;
+
+			HttpWorkflow.Get<EmployeeDTO>.From<EmployeesEndpoint>.ById("");
 		}
 	}
 }
