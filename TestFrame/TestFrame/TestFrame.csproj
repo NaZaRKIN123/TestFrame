@@ -54,8 +54,7 @@
     <Compile Include="Endpoints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestFactory.cs" />
-    <Compile Include="Session.cs" />
+    <Compile Include="RequestBuilder.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Workflows.cs" />
   </ItemGroup>

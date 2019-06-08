@@ -14,7 +14,6 @@ namespace TestFrame
 	{
 		public static RestClient Current { get; private set; } = Session.Instance;
 		public static RestClient New => Current = Session.Instance;
-
 		public static class Session
 		{
 			private static readonly Uri _uri = new Uri("http://nazar.free.beeceptor.com/");
