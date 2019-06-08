@@ -24,17 +24,27 @@ namespace TestFrame
 			_resource += new T().Resource;
 			return this;
 		}
+
 		public RequestBuilder ById(string id)
 		{
 			_resource += "/" + id;
 			return this;
 		}
+
+		public RequestBuilder ByQuery(Dictionary<string, string> query)
+		{
+			var filters = query.Select(kvp => $"{kvp.Key}={kvp.Value}");
+			_resource += "?" + string.Join("&", filters);
+			return this;
+		}
+
 		public T Get<T>() where T : class, new()
 		{
 			var request = new RestRequest(_resource, Method.GET);
 			var res = _session.Execute<T>(request);
 			return res.Data;
 		}
+
 		public RequestBuilder(RestClient session)
 		{
 			_session = session;

@@ -10,6 +10,7 @@ namespace TestFrame
 	{
 		public string ID;
 		public string Name;
+		public bool Active;
 	}
 	public class ProjDTO
 	{

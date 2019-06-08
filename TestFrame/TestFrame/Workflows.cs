@@ -11,18 +11,35 @@ namespace TestFrame
 {
 	public class EmpHttpWorkflow /*: HttpWorkflow<EmpEndpoint, EmpDTO>*/
 	{
-		public EmpDTO GetEmpDTO(string empId)
+		public EmpDTO GetEmp(string empName)
 		{
-			return Request.Using(SessionManager.Current).From<EmpEndpoint>().Get<EmpDTO>();
+			return Request.Using(SessionManager.Current)
+				.From<EmpEndpoint>()
+				.Get<List<EmpDTO>>().First(x => x.Name == empName);
 		}
 
-		//public EmpDTO GetEmpDTOFromProj(string empName, string projName)
-		//{
-		//	string projId = new ProjHttpWorkflow().GetProjId(projName);
+		public List<EmpDTO> GetEmpsFromProj(string empName, string projName)
+		{
+			string projId = new ProjHttpWorkflow().GetProj(projName).ID;
 
-		//	return;
-		//}
+			return Request.Using(SessionManager.Current)
+				.From<ProjEndpoint>().ById(projId)
+				.From<EmpEndpoint>()
+				.Get<List<EmpDTO>>();
+		}
 	}
+	
+	public class ProjHttpWorkflow /*: HttpWorkflow<ProjEndpoint, ProjDTO>*/
+	{
+		public ProjDTO GetProj(string projName)
+		{
+			return Request.Using(SessionManager.Current)
+				.From<ProjEndpoint>()
+				.Get<List<ProjDTO>>().First(x => x.Name == projName);
+		}
+	}
+
+
 	//public abstract class HttpWorkflow<Endpoint, DTO> where Endpoint : IEndpoint, new() where DTO : class, new()///: IHttpWorkflow
 	//{
 	//	protected RestClient _session;
@@ -56,12 +73,4 @@ namespace TestFrame
 
 
 
-	//public class ProjHttpWorkflow /*: HttpWorkflow<ProjEndpoint, ProjDTO>*/
-	//{
-	//	public string GetProjId(string name)
-	//	{
-	//		return GetAll().Where(x => x.Name == name).First().ID;
-	//	}
-
-	//}
 }
