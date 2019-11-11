@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RestSharp;
-using TestFrame;
 using TestFrame.Endpoints;
 
 namespace TestFrame
 {
-	public class EmpHttpWorkflow /*: HttpWorkflow<EmpEndpoint, EmpDTO>*/
+	public class EmpWorkflows /*: HttpWorkflow<EmpEndpoint, EmpDTO>*/
 	{
 		public EmpDTO GetEmp(string empName)
 		{
@@ -20,7 +18,7 @@ namespace TestFrame
 
 		public List<EmpDTO> GetEmpsFromProj(string empName, string projName)
 		{
-			string projId = new ProjHttpWorkflow().GetProj(projName).ID;
+			string projId = new ProjWorkflows().GetProj(projName).ID;
 
 			return Request.Using(SessionManager.Current)
 				.From<ProjEndpoint>().ById(projId)
@@ -29,7 +27,7 @@ namespace TestFrame
 		}
 	}
 	
-	public class ProjHttpWorkflow /*: HttpWorkflow<ProjEndpoint, ProjDTO>*/
+	public class ProjWorkflows /*: HttpWorkflow<ProjEndpoint, ProjDTO>*/
 	{
 		public ProjDTO GetProj(string projName)
 		{

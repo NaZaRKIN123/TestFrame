@@ -15,8 +15,8 @@ namespace TestFrame
 			var session = SessionManager.New;
 
 			var proj2emp1 = Using(session)
-				.From<ProjEndpoint>().ById("2")
-				.From<EmpEndpoint>().ById("1")
+				.From<ProjEndpoint>().ById(2)
+				.From<EmpEndpoint>().ById(1)
 				.Get<EmpDTO>();
 
 			var emps = Using(session)
@@ -24,13 +24,26 @@ namespace TestFrame
 				.Get<List<EmpDTO>>();
 
 			var proj1emps = Using(session)
-				.From<ProjEndpoint>().ById("1")
+				.From<ProjEndpoint>().ById(1)
 				.From<EmpEndpoint>()
 				.Get<List<EmpDTO>>();
 
-			var proj1activeEmps = Using(session)
-				.From<ProjEndpoint>().ById("1")
-				.From<EmpEndpoint>().ByQuery(new Dictionary<string, string>() { { "active", "false" } })
+			var proj1inactiveEmpsDict = Using(session)
+				.From<ProjEndpoint>().ById(1)
+				.From<EmpEndpoint>().ByQuery(new Dictionary<string, object>()
+				{
+					["active"] = false,
+					["name"] = "john"
+				})
+				.Get<List<EmpDTO>>();
+
+			var proj1inactiveEmpsAnon = Using(session)
+				.From<ProjEndpoint>(1)
+				.From<EmpEndpoint>().ByQuery(new
+				{
+					active = false,
+					name = "john"
+				})
 				.Get<List<EmpDTO>>();
 		}
 	}

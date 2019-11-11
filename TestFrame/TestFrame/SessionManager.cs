@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Deserializers;
-using TestFrame.Endpoints;
 
 namespace TestFrame
 {

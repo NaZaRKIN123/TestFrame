@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
@@ -25,17 +26,9 @@ namespace TestFrame
 			return this;
 		}
 
-		public RequestBuilder ById(string id)
+		public RequestBuilder From<T>(object id) where T : IEndpoint, new()
 		{
-			_resource += "/" + id;
-			return this;
-		}
-
-		public RequestBuilder ByQuery(Dictionary<string, string> query)
-		{
-			var filters = query.Select(kvp => $"{kvp.Key}={kvp.Value}");
-			_resource += "?" + string.Join("&", filters);
-			return this;
+			return From<T>().ById(id);
 		}
 
 		public T Get<T>() where T : class, new()
@@ -43,6 +36,29 @@ namespace TestFrame
 			var request = new RestRequest(_resource, Method.GET);
 			var res = _session.Execute<T>(request);
 			return res.Data;
+		}
+
+		public RequestBuilder ById(object id)
+		{
+			_resource += "/" + id;
+			return this;
+		}
+
+		public RequestBuilder ByQuery(Dictionary<string, object> query)
+		{
+			var filters = query.Select(kvp => $"{kvp.Key}={kvp.Value}");
+			_resource += "?" + string.Join("&", filters);
+			return this;
+		}
+
+		public RequestBuilder ByQuery(object anonymousClass)
+		{
+			Type type = anonymousClass.GetType();
+			PropertyInfo[] fields = type.GetProperties();
+
+			var filters = fields.Select(field => $"{field.Name}={field.GetValue(anonymousClass)}");
+			_resource += "?" + string.Join("&", filters);
+			return this;
 		}
 
 		public RequestBuilder(RestClient session)
