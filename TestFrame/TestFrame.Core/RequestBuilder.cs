@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
-using TestFrame.Endpoints;
+using TestFrame.Core.Endpoints;
 
-namespace TestFrame
+namespace TestFrame.Core
 {
 	public static class Request
 	{

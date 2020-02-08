@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestFrame.Endpoints;
+using TestFrame.Core.Endpoints;
 
-namespace TestFrame
+namespace TestFrame.Core
 {
 	public class EmpWorkflows /*: HttpWorkflow<EmpEndpoint, EmpDTO>*/
 	{

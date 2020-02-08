@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Deserializers;
 
-namespace TestFrame
+namespace TestFrame.Core
 {
 	public static class SessionManager
 	{

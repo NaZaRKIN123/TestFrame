@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace TestFrame.Endpoints
+namespace TestFrame.Core.Endpoints
 {
 	public interface IEndpoint
 	{
