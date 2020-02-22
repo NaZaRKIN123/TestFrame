@@ -19,7 +19,9 @@ namespace TestFrame.Tests
 		public void Setup()
 		{
 			new DriverManager().SetUpDriver(new ChromeConfig());
-			driver = new ChromeDriver();
+			ChromeOptions option = new ChromeOptions();
+			option.AddArguments("--proxy-server=http://192.168.0.112");
+			driver = new ChromeDriver(option);
 		}
 		[Test]
 		public void Test1()

@@ -1,5 +1,4 @@
 ﻿
-
 namespace TestFrame.Core.Endpoints
 {
 	public interface IEndpoint
