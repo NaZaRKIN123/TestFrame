@@ -1,56 +1,102 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.UI;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
 namespace TestFrame.Tests
 {
-	[TestFixture]
+	[TestFixture, Parallelizable]
 	class UITests
 	{
-		private RemoteWebDriver driver;
+		private IWebDriver driver;
+		private bool isSeleniumGrid = false;
 
-		[OneTimeSetUp]
+		[SetUp]
 		public void Setup()
 		{
-			new DriverManager().SetUpDriver(new ChromeConfig());
-			ChromeOptions option = new ChromeOptions();
-			option.AddArguments("--proxy-server=http://192.168.0.112");
-			driver = new ChromeDriver(option);
+			if (isSeleniumGrid)
+			{
+				var options = new ChromeOptions();
+				options.AddAdditionalCapability("platform", "windows", true);
+
+				driver = new RemoteWebDriver(new Uri("http://192.168.56.1:4444/wd/hub"), options.ToCapabilities());
+			}
+			else
+			{
+				new DriverManager().SetUpDriver(new ChromeConfig());
+				driver = new ChromeDriver();
+			}
+			driver.Manage().Window.Maximize();
 		}
-		[Test]
+
+		[Test, Parallelizable]
 		public void Test1()
 		{
 			Console.WriteLine("Test1 begin");
-			driver.Navigate().GoToUrl("https://facebook.com");
-			var el = driver.FindElement(By.XPath("//input[@type='submit']"));
-			el.Click();
-			Assert.Pass();
+			test();
 			Console.WriteLine("Test1 end");
 		}
-		[Test]
+
+		[Test, Parallelizable]
 		public void Test2()
 		{
 			Console.WriteLine("Test2 begin");
-			Assert.Pass();
+			test();
 			Console.WriteLine("Test2 end");
 		}
-		[Test]
+
+		[Test, Parallelizable]
 		public void Test3()
 		{
 			Console.WriteLine("Test3 begin");
-			Assert.Fail();
+			test();
 			Console.WriteLine("Test3 end");
 		}
-		[OneTimeTearDown]
+
+		[Test, Parallelizable]
+		public void Test4()
+		{
+			Console.WriteLine("Test4 begin");
+			test();
+			Console.WriteLine("Test4 end");
+		}
+
+		[Test, Parallelizable]
+		public void Test5()
+		{
+			Console.WriteLine("Test5 begin");
+			test();
+			Console.WriteLine("Test5 end");
+		}
+
+		[TearDown]
 		public void Teardown()
 		{
 			driver.Quit();
+		}
+
+		private void test()
+		{
+			driver.Navigate().GoToUrl("https://google.com");
+			WaitUntilPageIsReady();
+			driver.FindElement(By.XPath("//*[@role='combobox']")).Click();
+			driver.FindElement(By.XPath("//*[@role='combobox']")).SendKeys("wikipedia");
+			driver.FindElement(By.XPath("//*[@role='combobox']")).SendKeys(Keys.Enter);
+			Thread.Sleep(3000);
+		}
+
+		private void WaitUntilPageIsReady()
+		{
+			new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+				.Until(webDriver => ((IJavaScriptExecutor)webDriver)
+									.ExecuteScript("return document.readyState").Equals("complete"));
 		}
 	}
 }
