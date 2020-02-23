@@ -6,4 +6,4 @@ java -jar -Dwebdriver.chrome.driver=Z:\chromedriver.exe Z:\selenium-server-stand
 
 
 //NODE LINUX
-java -Dwebdriver.chrome.driver="/home/nazar/chromedriver" -jar "/home/nazar/shared/selenium-server-standalone.jar" -role node -hub http://10.0.3.2:4444/grid/register -browser "browserName=chrome,version=80,maxInstances=1,platform=LINUX"
+java -jar -Dwebdriver.chrome.driver="/home/nazar/chromedriver" "/home/nazar/shared/selenium-server-standalone.jar" -role node -hub http://10.0.3.2:4444/grid/register -browser "browserName=chrome,version=80,maxInstances=1,platform=LINUX"
