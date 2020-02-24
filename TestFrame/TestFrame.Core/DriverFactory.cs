@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Safari;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -19,7 +20,7 @@ namespace TestFrame.Core
 		public static IWebDriver New()
 		{
 			IWebDriver driver;
-			var options = new ChromeOptions();
+			var options = new SafariOptions();
 			if (isSeleniumGrid)
 			{
 				//options.AddAdditionalCapability("platform", "windows", true);
@@ -30,7 +31,7 @@ namespace TestFrame.Core
 			{
 				//options.AddArgument("headless");
 				new DriverManager().SetUpDriver(new ChromeConfig());
-				driver = new ChromeDriver(options);
+				driver = new RemoteWebDriver(options);
 			}
 			driver.Manage().Window.Maximize();
 			return driver;
