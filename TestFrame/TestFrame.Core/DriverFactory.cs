@@ -17,10 +17,16 @@ namespace TestFrame.Core
 		private static bool isSeleniumGrid = true;
 		private static Dictionary<string, IWebDriver> drivers = new Dictionary<string, IWebDriver>();
 
-		public static IWebDriver New()
+		private static IWebDriver New(string browser)
 		{
+			DriverOptions options;
+			if (browser == "Safari")
+				options = new SafariOptions();
+			else
+				options = new ChromeOptions();
+
 			IWebDriver driver;
-			var options = new SafariOptions();
+
 			if (isSeleniumGrid)
 			{
 				//options.AddAdditionalCapability("platform", "windows", true);
@@ -37,9 +43,9 @@ namespace TestFrame.Core
 			return driver;
 		}
 
-		public static void New(string testName)
+		public static void New(string testName, string browser)
 		{
-			drivers.Add(testName, New());
+			drivers.Add(testName, New(browser));
 		}
 
 		public static IWebDriver Get(string testName)

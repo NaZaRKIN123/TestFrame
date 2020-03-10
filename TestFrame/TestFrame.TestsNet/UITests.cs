@@ -15,7 +15,8 @@ namespace TestFrame.Tests
 		[SetUp]
 		public void Setup()
 		{
-			DriverFactory.New(TestContext.CurrentContext.Test.Name);
+			DriverFactory.New(TestContext.CurrentContext.Test.Name,
+								TestContext.CurrentContext.Get<Browser>());
 		}
 		[Test, Parallelizable]
 		public void Test1()
@@ -23,13 +24,13 @@ namespace TestFrame.Tests
 			test();
 		}
 
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test2()
 		{
 			test();
 		}
 
-		[Test, Parallelizable]
+		[Test, Parallelizable, Property("Browser", "Safari")]
 		public void Test3()
 		{
 			test();
