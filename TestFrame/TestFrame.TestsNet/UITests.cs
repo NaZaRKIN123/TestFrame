@@ -18,7 +18,7 @@ namespace TestFrame.Tests
 			DriverFactory.New(TestContext.CurrentContext.Test.Name,
 								TestContext.CurrentContext.Get<Browser>());
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test1()
 		{
 			test();
@@ -30,49 +30,49 @@ namespace TestFrame.Tests
 			test();
 		}
 
-		[Test, Parallelizable, Property("Browser", "Safari")]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test3()
 		{
 			test();
 		}
 
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test4()
 		{
 			test();
 		}
 
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test5()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test6()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test7()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test8()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test9()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test10()
 		{
 			test();
 		}
-		[Test, Parallelizable]
+		[Test, Parallelizable, Browser(Browser.Chrome)]
 		public void Test11()
 		{
 			test();

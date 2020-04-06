@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Safari;
 using WebDriverManager;
@@ -14,38 +16,56 @@ namespace TestFrame.Core
 {
 	public static class DriverFactory
 	{
-		private static bool isSeleniumGrid = true;
-		private static Dictionary<string, IWebDriver> drivers = new Dictionary<string, IWebDriver>();
+		private static bool isSeleniumGrid = false;
+		private static ConcurrentDictionary<string, IWebDriver> drivers = new ConcurrentDictionary<string, IWebDriver>();
 
-		private static IWebDriver New(string browser)
+		private static IWebDriver New(Browser browser)
 		{
-			DriverOptions options;
-			if (browser == "Safari")
-				options = new SafariOptions();
-			else
-				options = new ChromeOptions();
-
 			IWebDriver driver;
 
 			if (isSeleniumGrid)
 			{
-				//options.AddAdditionalCapability("platform", "windows", true);
-
+				DriverOptions options;
+				switch (browser)
+				{
+					case Browser.Safari:
+						options = new SafariOptions();
+						break;
+					case Browser.Chrome:
+						options = new ChromeOptions();
+						break;
+					case Browser.Firefox:
+						options = new FirefoxOptions();
+						break;
+					default:
+						throw new NotSupportedException($"'{browser}' is not supported.");
+				}
 				driver = new RemoteWebDriver(new Uri("http://192.168.56.1:4444/wd/hub"), options.ToCapabilities());
 			}
 			else
 			{
-				//options.AddArgument("headless");
-				new DriverManager().SetUpDriver(new ChromeConfig());
-				driver = new RemoteWebDriver(options);
+				switch (browser)
+				{
+					case Browser.Chrome:
+						new DriverManager().SetUpDriver(new ChromeConfig());
+						driver = new ChromeDriver();
+						break;
+					case Browser.Firefox:
+						new DriverManager().SetUpDriver(new FirefoxConfig());
+						driver = new FirefoxDriver();
+						break;
+					default:
+						throw new NotSupportedException($"'{browser}' is not supported.");
+				}
 			}
 			driver.Manage().Window.Maximize();
 			return driver;
 		}
 
-		public static void New(string testName, string browser)
+		public static void New(string testName, Browser browser)
 		{
-			drivers.Add(testName, New(browser));
+			if (!drivers.TryAdd(testName, New(browser)))
+				throw new ArgumentException($"Driver name: '{testName}' already exists.");
 		}
 
 		public static IWebDriver Get(string testName)
@@ -55,8 +75,8 @@ namespace TestFrame.Core
 
 		public static void Quit(string testName)
 		{
-			drivers[testName].Quit();
-			drivers.Remove(testName);
+			if (drivers.TryRemove(testName, out IWebDriver driver))
+				driver.Quit();
 		}
 	}
 }

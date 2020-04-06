@@ -11,7 +11,19 @@ namespace TestFrame.Core
 	{
 		public static T Get<T>(this TestContext context)
 		{
-			return (T)context.Test.Properties.Get(nameof(T));
+			string key = typeof(T).Name;
+			string value = string.Empty;
+			//if (context.Test.Properties.ContainsKey(key))
+				value = context.Test.Properties.Get(key).ToString();
+			//else
+			//	return Browser.Chrome;
+			try
+			{
+				return (T)Enum.Parse(typeof(T), value);
+			}
+			catch{ }
+
+			return (T)(object)value;
 		}
 	}
 }
