@@ -36,7 +36,7 @@ namespace TestFrame.Tests
 			});
 		}
 
-		[Test]
+		//[Test]
 		public void Test2()
 		{
 			var emps = Using(session)
@@ -50,7 +50,7 @@ namespace TestFrame.Tests
 			});
 		}
 
-		[Test]
+		//[Test]
 		public void Test3()
 		{
 			var proj1emps = Using(session)
@@ -61,7 +61,7 @@ namespace TestFrame.Tests
 			CollectionAssert.IsNotEmpty(proj1emps);
 		}
 
-		[Test]
+		//[Test]
 		public void Test4()
 		{
 			var proj1inactiveEmpsDict = Using(session)
