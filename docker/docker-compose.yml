@@ -20,7 +20,7 @@ services:
     mono:
         build: mono/
         container_name: mono
-#        network_mode: host
+        network_mode: host
         depends_on:
             - hub
             - desktop

@@ -16,20 +16,14 @@ RUN apt-get update \
 # Get NUnit and chromedriver
 && mono nuget.exe install NUnit -Version 3.12.0 \
 && mono nuget.exe install NUnit.Runners -Version ${nUnitTestRunnerVersion} \
-#&& sudo wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip \
-#&& sudo unzip chromedriver_linux64.zip \
-#&& sudo rm chromedriver_linux64.zip \
 #
 # Get sample project and build it
-&& apt-get -y install git \
+&& apt-get -y install git
+CMD cd home \
 && git clone https://github.com/NaZaRKIN123/TestFrame.git \
 && mono nuget.exe restore TestFrame/TestFrame/TestFrame.sln \
-&& msbuild TestFrame/TestFrame/TestFrame.sln /t:Build /p:Configuration=Release
+&& msbuild TestFrame/TestFrame/TestFrame.sln /t:Build /p:Configuration=Release \
 #
-# Install Chrome
-#&& sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-#&& sudo apt-get -y install ./google-chrome-stable_current_amd64.deb \
-#&& sudo rm google-chrome-stable_current_amd64.deb
 # Run tests
-CMD mono home/NUnit.ConsoleRunner.${nUnitTestRunnerVersion}/tools/nunit3-console.exe home/TestFrame/TestFrame/TestFrame.TestsNet/bin/Release/TestFrame.TestsNet.dll -noresult
+&& mono NUnit.ConsoleRunner.${nUnitTestRunnerVersion}/tools/nunit3-console.exe TestFrame/TestFrame/TestFrame.TestsNet/bin/Release/TestFrame.TestsNet.dll -noresult
 # end
