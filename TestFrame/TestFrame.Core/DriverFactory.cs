@@ -16,7 +16,7 @@ namespace TestFrame.Core
 {
 	public static class DriverFactory
 	{
-		private static bool isSeleniumGrid = false;
+		private static bool isSeleniumGrid = true;
 		private static ConcurrentDictionary<string, IWebDriver> drivers = new ConcurrentDictionary<string, IWebDriver>();
 
 		private static IWebDriver New(Browser browser)
@@ -40,7 +40,7 @@ namespace TestFrame.Core
 					default:
 						throw new NotSupportedException($"'{browser}' is not supported.");
 				}
-				driver = new RemoteWebDriver(new Uri("http://192.168.56.1:4444/wd/hub"), options.ToCapabilities());
+				driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), options.ToCapabilities());
 			}
 			else
 			{

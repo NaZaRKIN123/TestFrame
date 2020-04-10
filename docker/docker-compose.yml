@@ -1,0 +1,24 @@
+version: "3"
+services:
+    hub:
+        image: selenium/hub:latest
+        container_name: hub
+        ports:
+          - 4444:4444
+        expose: 
+          - 4444
+    desktop:
+        image: selenium/node-chrome-debug:latest
+        container_name: desktop
+        ports:
+            - 5900:5900
+        depends_on:
+            - hub
+        environment:
+           - HUB_HOST=hub
+           - HUB_PORT=4444
+    mono:
+        build: mono/
+#        network_mode: host
+        depends_on:
+            - hub
