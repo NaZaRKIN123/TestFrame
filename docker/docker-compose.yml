@@ -15,8 +15,8 @@ services:
         depends_on:
             - hub
         environment:
-           - HUB_HOST=hub
-           - HUB_PORT=4444
+            - HUB_HOST=hub
+            - HUB_PORT=4444
     mono:
         build: mono/
         container_name: mono
