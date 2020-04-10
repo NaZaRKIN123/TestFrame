@@ -40,7 +40,7 @@ namespace TestFrame.Core
 					default:
 						throw new NotSupportedException($"'{browser}' is not supported.");
 				}
-				driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), options.ToCapabilities());
+				driver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), options.ToCapabilities(), TimeSpan.FromMinutes(1));
 			}
 			else
 			{
