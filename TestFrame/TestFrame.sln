@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFrame.TestsNet", "TestFrame.TestsNet\TestFrame.TestsNet.csproj", "{89519407-7D19-41C7-844D-E2DCA1C18D37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFrame.TestsNet", "TestFrame.TestsNet\TestFrame.TestsNet.csproj", "{89519407-7D19-41C7-844D-E2DCA1C18D37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFrame.Core", "TestFrame.Core\TestFrame.Core.csproj", "{72C2E851-A027-4336-9438-B5F15B8A4FF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFrame.Core", "TestFrame.Core\TestFrame.Core.csproj", "{72C2E851-A027-4336-9438-B5F15B8A4FF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

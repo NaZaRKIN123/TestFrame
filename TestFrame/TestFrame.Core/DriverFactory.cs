@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -16,7 +14,7 @@ namespace TestFrame.Core
 {
 	public static class DriverFactory
 	{
-		private static bool isSeleniumGrid = true;
+		private static bool isSeleniumGrid = false;
 		private static ConcurrentDictionary<string, IWebDriver> drivers = new ConcurrentDictionary<string, IWebDriver>();
 
 		private static IWebDriver New(Browser browser)
@@ -48,7 +46,7 @@ namespace TestFrame.Core
 				{
 					case Browser.Chrome:
 						new DriverManager().SetUpDriver(new ChromeConfig());
-						driver = new ChromeDriver();
+						driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 						break;
 					case Browser.Firefox:
 						new DriverManager().SetUpDriver(new FirefoxConfig());
