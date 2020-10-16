@@ -19,6 +19,7 @@ RUN apt-get update \
 #
 # Get sample project and build it
 && apt-get -y install git
+
 CMD cd home \
 && git clone https://github.com/NaZaRKIN123/TestFrame.git \
 && mono nuget.exe restore TestFrame/TestFrame/TestFrame.sln \
